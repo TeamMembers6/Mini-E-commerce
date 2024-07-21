@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce</title>
+   
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+      * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.header {
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    padding: 5px;
+    display: flex;
+}
+
+.logo .fa-shop {
+    color: rgb(12, 40, 99);
+    margin: 10px 5px;
+    font-size: 30px;
+}
+
+.logo h2 {
+    font-family: cursive;
+    margin: 10px 2px;
+    color: rgb(15, 119, 198);
+}
+
+.menu {
+    display: none;
+    font-size: 25px;
+    padding: 10px;
+    cursor: pointer;
+}
+
+.nav ul {
+    display: flex;
+    align-items: center;
+    border: none;
+    margin: 10px;
+}
+
+.nav ul li {
+    list-style: none;
+    margin: 5px 10px;
+
+}
+
+.nav ul li a {
+    
+    text-decoration: none;
+}
+
+.showbar {
+    display: flex;
+    font-size: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    /* scroll-margin-block-start: -20px; */
+    background-color: #d74646;
+    
+   
+}
+.showbar .item {
+    flex: 0 0 auto;
+    width: 100px;
+    font-size: 15px;
+}
+.showbar .item a{
+    color: aliceblue;
+}
+.showbar::-webkit-scrollbar{
+    border-radius: 10px;
+}
+.showbar .item img {
+    width: 100px;
+    height: 60px;
+
+}
+.products{
+    display: flex;
+    flex-wrap: wrap;
+}
+.product{
+    width:300px;
+    height:410px;
+    margin:5px auto;
+    font-family:impact;
+    background-color: rgba(137, 112, 112, 0.4);
+    border-radius: 5px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.4);
+}
+.product img{
+    width:300px;
+    height: 200px;
+    padding: 10px;;
+}
+.product .title , .product .price {
+    padding: 0 8px;
+  color:indigo;
+}
+
+@media (max-width:570px) {
+    .header {
+        position: relative;
+    }
+
+    .links {
+        display: none;
+
+    }
+
+    .menu {
+        display: block;
+        position: absolute;
+        right: 0;
+    }
+
+    .links .sidenav ul {
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        font-size: 25px;
+        padding: 5px;
+        align-items: start;
+        background-color: black;
+        position: absolute;
+        right: 0;
+        top: 60px;
+    }
+
+    .showbar .item {
+        flex: 0 0 auto;
+        width: 60px;
+        height: auto;
+        
+        font-size: 7px;
+    }
+    
+    .showbar .item img {
+        width: 60px;
+        height: 60px;
+    
+    }
+    .product{
+        width:200px;
+        height:205px;
+        font-size: 9px;
+        font-family: arial;
+    }
+    .product img{
+        width: 190px;
+        height:150px;
+    }
+
+
+}
+
+@media (min-width:570px) and (max-width:1050px) {
+   
+    .menu {
+        display: none;
+    }
+}
+</style>
+</head>
+
+<body>
+    <div class="cotainer">
+        <div class="header">
+            <div class="logo">
+                <i class="fa-solid fa-shop"></i>
+                <h2>Delivery</h2>
+            </div>
+            <div class="menu">
+                <i class="fa-solid fa-bars" onclick="menuShow()"></i>
+            </div>
+            <div class="links">
+                <div class="nav">
+                    <ul>
+                        <li><a href="index.html"><span><i class="fa-solid fa-house mx-1"></i></span>Home</a></li>
+                        <li><a href="about.html"><i class="fa-regular fa-address-card mx-1"></i>About</a></li>
+                        <li><a href="contact.html"><i class="fa-solid fa-address-book mx-1"></i>Contact</a></li>
+                        <li><a href="./login.html"><i class="fa-solid fa-right-to-bracket mx-1"></i>Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <div class="showbar"></div>
+        </div>
+        <div class="products">
+            
+        </div>
+    </div>
+<script>
+let productData = [];
+
+function menuShow() {
+    let popup = document.querySelector('.nav');
+    popup.classList.toggle('sidenav');
+    let links = document.querySelector('.links');
+    if (popup.classList.contains('sidenav'))
+        links.style.display = 'block';
+    else
+        links.style.display = 'none';
+}
+
+function imageLoading() {
+  console.log(localStorage.username);console.log(localStorage.purchasedProducts);
+    let bar = document.querySelector(".showbar");
+    let items = [
+        { "name": "Men's Clothes", "image": "images/men's.jpeg",id:2},
+        { "name": "Women's Clothes", "image": "images/women'sclothes.jpeg",id:20},
+        { "name": "Jewellery", "image": "images/jewellery.jpeg" ,id:6},
+        { "name": "Electronics", "image": "images/electronics.jpeg",id:13},
+        { "name": "Bags", "image": "images/bags.jpeg" ,id:1},
+        { "name": "Bags", "image": "images/bags.jpeg" ,id:3},
+    ];
+    let itemhtml = items.map((data) => {
+        return `<div class="item m-2">
+            <a href="product.html?id=${data.id}" class="text-decoration-none">
+             <img src="${data.image}" alt="image" />
+              <p class="text-center mt-1">${data.name}</p>
+            </a>
+           </div>`;
+    }).join('');
+
+    bar.innerHTML = itemhtml;
+}
+
+window.onload = imageLoading;
+
+
+async function productsLoading() {
+    let products = await fetch('https://fakestoreapi.com/products');
+    let res = await products.json();
+    productData = res; 
+  // Store the product data in the global array
+  localStorage.setItem('productData', JSON.stringify(productData)); // Store product data in localStorage
+    let productsHtml = document.querySelector('.products');
+    let item = res.map((data) => {
+        return (
+            `<div class='product'>
+                <a class="text-decoration-none" href="product.html?id=${data.id}" onclick="storeProductId(${data.id})">
+                    <img src='${data.image}' alt="image" />
+                    <div class='text-start title'>Name: ${data.title}</div>
+                    <div class='text-start price'>Price: $${data.price}</div>
+                </a>  
+
+            </div>`
+        );
+    }).join('');
+    productsHtml.innerHTML = item;
+}
+
+productsLoading();
+
+function storeProductId(id) {
+    localStorage.setItem('productId', id);
+}
+
+function showProduct(index) {
+    let product = productData[index];
+    console.log(product.title);
+}
+</script>
+</html>
