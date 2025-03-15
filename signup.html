@@ -100,7 +100,7 @@
                 let password = document.getElementById('password').value;
                 let mobile = document.getElementById('mobile').value;
                 
-                fetch('http://localhost:5000/signup', {
+                fetch('https://mini-e-commerce-xrfg.onrender.com/signup', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name: username, email: email, password: password, mobile: mobile })
