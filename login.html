@@ -94,7 +94,7 @@
                 let username = document.getElementById('username').value;
                 let password = document.getElementById('password').value;
     
-                fetch('http://localhost:5000/login', {
+                fetch('https://mini-e-commerce-xrfg.onrender.com/login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ name: username, password: password })
