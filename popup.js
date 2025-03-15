@@ -37,7 +37,7 @@ function imageLoading() {
 async function productsLoading() {
     
     
-    let products = await fetch('http://localhost:5000/products');
+    let products = await fetch('https://mini-e-commerce-xrfg.onrender.com/products');
     let res = await products.json();
    
     let productsHtml = document.querySelector('.products');
