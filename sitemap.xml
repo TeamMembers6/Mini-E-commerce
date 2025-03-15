@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://teammembers6.github.io/Mini-E-commerce/</loc>
+  <lastmod>2025-03-15T07:33:59+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://teammembers6.github.io/Mini-E-commerce/index.html</loc>
+  <lastmod>2025-03-15T07:33:59+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://teammembers6.github.io/Mini-E-commerce/about.html</loc>
+  <lastmod>2025-03-15T07:33:59+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://teammembers6.github.io/Mini-E-commerce/contact.html</loc>
+  <lastmod>2025-03-15T07:33:59+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://teammembers6.github.io/Mini-E-commerce/login.html</loc>
+  <lastmod>2025-03-15T07:33:59+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://teammembers6.github.io/Mini-E-commerce/cart.html</loc>
+  <lastmod>2025-03-15T07:33:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://teammembers6.github.io/Mini-E-commerce/product.html?id=13</loc>
+  <lastmod>2025-03-15T07:33:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://teammembers6.github.io/Mini-E-commerce/signup.html</loc>
+  <lastmod>2025-03-15T07:33:59+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://teammembers6.github.io/Mini-E-commerce/purchasedItems.html</loc>
+  <lastmod>2025-03-15T07:33:59+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+
+
+</urlset>
