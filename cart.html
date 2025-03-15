@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .cart-item img {
+            width: 100px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .cart-item .details {
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .cart-item .details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .cart-item .details p {
+            margin-bottom: 5px;
+        }
+
+        .cart-item .actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cart-item .actions button {
+            margin-top: 5px;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-controls button {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+        }
+
+        .quantity-controls span {
+            width: 50px;
+            text-align: center;
+            color: red;
+        }
+
+        .empty-cart {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #999;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navigation text-center">
+            <a href="index.html" class="text-decoration-none"><button class='btn btn-primary m-1'>Home</button></a>
+            <a href="#" class="text-decoration-none" id="product-link">
+                <button class='btn btn-primary m-1'>Products</button>
+            </a>
+            <a href='purchasedItems.html' class="text-decoration-none"><button class='btn btn-primary m-1'>Purchased Items</button></a>
+        </div>
+
+        <h1 class="text-center">Your Shopping Cart</h1>
+        <div id="cart-items">
+            <!-- Cart items will be injected here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            // Dynamically set product link with random ID between 1 and 20
+            const randomProductId = Math.floor(Math.random() * 20) + 1;
+            document.getElementById('product-link').href = `product.html?id=${randomProductId}`;
+
+            const token = localStorage.getItem('auth'); // Retrieve the JWT token from local storage
+            if (!token) {
+                alert('You must be logged in to view the cart');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            try {
+                // Fetch cart items from the backend using JWT token
+                const response = await fetch('http://localhost:5000/cart', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to fetch cart items');
+                }
+
+                let cartItems = await response.json();
+
+                // Ensure each item has a quantity property
+                cartItems.forEach(item => {
+                    if (item.quantity === undefined) {
+                        item.quantity = 1;
+                    }
+                });
+
+                function displayCartItems() {
+                    const cartContainer = document.getElementById('cart-items');
+                    cartContainer.innerHTML = '';
+
+                    if (cartItems.length === 0) {
+                        cartContainer.innerHTML = '<p class="empty-cart">Your cart is empty.</p>';
+                        return;
+                    }
+
+                    cartItems.forEach(item => {
+                        cartContainer.innerHTML += `
+                            <div class="cart-item">
+                                <a href="product.html?id=${item.productId}" class="text-decoration-none">
+                                    <img src="${item.image}" alt="Product Image">
+                                </a>
+                                <div class="details">
+                                    <a href="product.html?id=${item.productId}" class="text-decoration-none">
+                                        <h4>${item.title}</h4>
+                                    </a>
+                                    <p>Price: $${item.price}</p>
+                                    <div class="quantity-controls">
+                                        <button class="btn btn-secondary" onclick="updateQuantity(${item.productId}, 'decrement')">-</button>
+                                        <span id="quantity-${item.productId}">${item.quantity}</span>
+                                        <button class="btn btn-secondary" onclick="updateQuantity(${item.productId}, 'increment')">+</button>
+                                    </div>
+                                </div>
+                                <div class="actions">
+                                    <button class="btn btn-primary" onclick="buyCart(${item.productId})">Buy</button>
+                                </div>
+                                <div class="actions mx-3">
+                                    <button class="btn btn-danger" onclick="removeFromCart(${item.productId})">Remove</button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+
+                async function buyCart(productId) {
+                    localStorage.setItem('buyProductId', productId);
+                    window.location.href = 'buy.html';
+                }
+
+                async function removeFromCart(productId) {
+                    const response = await fetch(`http://localhost:5000/cart/${productId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+
+                    if (response.ok) {
+                        alert('Item removed from cart');
+                        // Update cart display after removal
+                        cartItems = cartItems.filter(item => item.productId !== productId);
+                        displayCartItems();
+                    } else {
+                        alert('Failed to remove item');
+                    }
+                }
+
+                async function updateQuantity(productId, action) {
+                    const itemIndex = cartItems.findIndex(item => item.productId === productId);
+
+                    if (itemIndex === -1) return;
+
+                    let newQuantity = cartItems[itemIndex].quantity;
+                    if (action === 'increment' && newQuantity < 5) {
+                        newQuantity++;
+                    } else if (action === 'decrement' && newQuantity > 1) {
+                        newQuantity--;
+                    } else {
+                        alert("Reached maximum item quantity!");
+                    }
+
+                    if (newQuantity > 1 && newQuantity < 6) {
+                        const response = await fetch(`http://localhost:5000/cart/${productId}`, {
+                            method: 'PUT',
+                            headers: {
+                                'Authorization': `Bearer ${token}`,
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ quantity: newQuantity })
+                        });
+
+                        if (response.ok) {
+                            cartItems[itemIndex].quantity = newQuantity;
+                            displayCartItems();
+                        } else {
+                            alert('Failed to update quantity');
+                        }
+                    }
+                }
+
+                window.buyCart = buyCart;
+                window.removeFromCart = removeFromCart;
+                window.updateQuantity = updateQuantity;
+                displayCartItems();
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('An error occurred while fetching cart items.');
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Product</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* General styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        
+
+        .product-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .product-content img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border: 0.9px solid rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        .product-content h1 {
+            font-family: 'Arial';
+            font-size: 2rem;
+            color: skyblue;
+            margin-bottom: 10px;
+        }
+
+        .product-content p {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .payment-options {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .payment-options h2 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .payment-options .option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .payment-options .option input {
+            margin-right: 10px;
+        }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="navigation text-center">
+            <!-- Dynamic Product ID Link -->
+            <a href="#" class="text-decoration-none" id="product-link">
+                <button class="btn btn-primary m-1">Products</button>
+            </a>
+            <a href="index.html" class="text-decoration-none"><button class='btn btn-primary m-1'>Home</button></a>
+            <a href="cart.html" class="text-decoration-none"><button class='btn btn-primary m-1'>Cart Items</button></a>
+            <a href='purchasedItems.html' class="text-decoration-none"><button class='btn btn-primary m-2'>Purchased
+                    Items</button></a>
+        </div>
+
+        <div id="buy-product-details">
+            <!-- Product details will be injected here -->
+        </div>
+        <div class="payment-options">
+            <!-- Payment options will be injected here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", async function () {
+            // Generate random product id between 1 and 20
+            let randomProductId = Math.floor(Math.random() * 20) + 1;
+
+            // Dynamically update the "Products" link with the new product id
+            document.getElementById("product-link").href = `product.html?id=${randomProductId}`;
+
+            let productId = localStorage.getItem('buyProductId');
+            
+            if (!productId) {
+                alert('Product ID is missing!');
+                window.location.href = 'index.html'; // Redirect to product listing if no product ID is found 
+                return;
+            }
+
+            async function fetchProduct(id) {
+                try {
+                    const response = await fetch(`http://localhost:5000/product/${id}`);
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch product');
+                    }
+                    const product = await response.json();
+                    return product;
+                } catch (error) {
+                    console.error('Error fetching product:', error);
+                    return null;
+                }
+            }
+
+            let product = await fetchProduct(productId);
+            localStorage.removeItem('buyProductId');
+            
+            if (product) {
+                document.getElementById('buy-product-details').innerHTML = `
+                    <div class='product-content'>
+                        <img src="${product.image}" alt="Product Image">
+                        <h1>${product.title}</h1>
+                        <p style="color:orange">Price: $${product.price}</p>
+                        <p>Description: ${product.description}</p>
+                        <p>Rating: ${product.rating.rate}</p>
+                    </div>
+                `;
+                document.querySelector('.payment-options').innerHTML = `
+                    <h2>Choose a Payment Method:</h2>
+                    <div class="option">
+                        <input type="radio" name="payment" id="credit-card" value="Credit Card">
+                        <label for="credit-card">Credit Card</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="payment" id="paypal" value="PayPal">
+                        <label for="paypal">PayPal</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" name="payment" id="bank-transfer" value="Bank Transfer">
+                        <label for="bank-transfer">Bank Transfer</label>
+                    </div>
+                    <button class="btn btn-success mt-3" id="proceed-button">Proceed to Payment</button>
+                    <div class="error-message" id="error-message">Please select a payment method.</div>
+                `;
+            } else {
+                document.getElementById('buy-product-details').innerHTML = '<p>Product not found.</p>';
+            }
+
+            function Home() {
+                if (productId) {
+                    const token = localStorage.getItem('auth');  // Assuming the token is stored in localStorage under 'authToken'
+                    fetch('http://localhost:5000/purchased', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`  // Apply Bearer token for authorization
+                        },
+                        body: JSON.stringify({ productName: product.title, image: product.image, id: product.id })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        window.location.href = 'index.html';
+                    })
+                    .catch(err => {
+                        console.log('Error:', err);
+                    });
+                } else {
+                    window.location.href ='index.html';
+                }
+            }
+
+            document.getElementById('proceed-button').addEventListener('click', function () {
+                let selectedPayment = document.querySelector('input[name="payment"]:checked');
+                let errorMessage = document.getElementById('error-message');
+
+                if (!selectedPayment) {
+                    errorMessage.style.display = 'block';
+                } else {
+                    errorMessage.style.display = 'none';
+                    let paymentMethod = selectedPayment.value;
+                    Home(); // Proceed with Home function
+                    alert(`Proceeding to ${paymentMethod} Payment...`);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
