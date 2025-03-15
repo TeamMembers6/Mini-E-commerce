@@ -137,7 +137,7 @@
         
 async function fetchProduct(id) {
     try {
-        const response = await fetch(`http://localhost:5000/product/${id}`);
+        const response = await fetch(`https://mini-e-commerce-xrfg.onrender.com/product/${id}`);
         const product = await response.json();
         return product;
     } catch (error) {
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             
             if (isLoggedIn) {
                 let token = localStorage.getItem('auth');
-                fetch('http://localhost:5000/addCart', {
+                fetch('https://mini-e-commerce-xrfg.onrender.com/addCart', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
