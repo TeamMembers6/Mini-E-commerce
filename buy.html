@@ -128,7 +128,7 @@
 
             async function fetchProduct(id) {
                 try {
-                    const response = await fetch(`http://localhost:5000/product/${id}`);
+                    const response = await fetch(`https://mini-e-commerce-xrfg.onrender.com/product/${id}`);
                     if (!response.ok) {
                         throw new Error('Failed to fetch product');
                     }
@@ -177,7 +177,7 @@
             function Home() {
                 if (productId) {
                     const token = localStorage.getItem('auth');  // Assuming the token is stored in localStorage under 'authToken'
-                    fetch('http://localhost:5000/purchased', {
+                    fetch('https://mini-e-commerce-xrfg.onrender.com/purchased', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
