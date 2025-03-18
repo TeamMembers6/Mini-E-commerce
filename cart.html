@@ -444,7 +444,7 @@
 
                 async function removeFromCart(productId) {
 
-                    const response = await fetch(`http://localhost:5000/cart/${productId}`, {
+                    const response = await fetch(`https://mini-e-commerce-xrfg.onrender.com/cart/${productId}`, {
 
                         method: 'DELETE',
 
@@ -508,7 +508,7 @@
 
                     if (newQuantity > 1 && newQuantity < 6) {
 
-                        const response = await fetch(`http://localhost:5000/cart/${productId}`, {
+                        const response = await fetch(`https://mini-e-commerce-xrfg.onrender.com/cart/${productId}`, {
 
                             method: 'PUT',
 
