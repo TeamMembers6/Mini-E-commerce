@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Shared Body Styles for consistency with login page */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #323740, #9fc7da);
+            /* Lighter, softer gradient for signup */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Background animation (same as login for consistency) */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23ffffff" fill-opacity="0.1"/></svg>') repeat;
+            background-size: 50px 50px;
+            animation: backgroundMove 60s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes backgroundMove {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 1000px 1000px;
+            }
+        }
+
+        .signup-container {
+            background: rgba(255, 255, 255, 0.95);
+            /* Slightly transparent white background */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            /* Deeper shadow */
+            transform: translateY(0);
+            transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            width: 500px;
+            /* Slightly wider for more input fields */
+            max-width: 90%;
+            text-align: center;
+        }
+
+        .signup-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .signup-container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: inherit;
+            filter: blur(20px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .signup-container h2 {
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 2.4em;
+            /* Slightly larger heading for signup */
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-container .form-control {
+            margin-bottom: 20px;
+            border-radius: 8px;
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .signup-container .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+
+        .signup-container .form-label {
+            text-align: left;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .signup-container .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            background-color: #28a745;
+            /* Green for sign up button */
+            border-color: #28a745;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .signup-container .btn:hover {
+            background-color: #218838;
+            border-color: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .login-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            font-size: 0.95em;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .login-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .invalid-feedback {
+            font-size: 0.85em;
+            margin-top: 5px;
+            text-align: left;
+            /* Align validation messages to the left */
+        }
+
+        /* Style for server-side error messages (similar to invalid-credentials) */
+        .server-error-message {
+            color: #dc3545;
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 0.9em;
+            display: none;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-5px);
+            }
+
+            40% {
+                transform: translateX(5px);
+            }
+
+            60% {
+                transform: translateX(-5px);
+            }
+
+            80% {
+                transform: translateX(5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Optional: Add a subtle glow on form elements when invalid */
+        .form-control.is-invalid {
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
+        <form id="signup-form" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">User Name:</label>
+                <input type="text" class="form-control" id="username" required minlength="3">
+                <div class="invalid-feedback" id="username-feedback">Username must be at least 3 characters long.</div>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address:</label>
+                <input type="email" class="form-control" id="email" required
+                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                <div class="invalid-feedback" id="email-feedback">Please enter a valid email address.</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Create Strong Password:</label>
+                <input type="password" class="form-control" id="password" required minlength="8">
+                <div class="invalid-feedback" id="password-feedback">Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.</div>
+            </div>
+            <div class="mb-3">
+                <label for="mobile" class="form-label">Mobile Number:</label>
+                <input type="tel" class="form-control" id="mobile" required pattern="[6-9]\d{9}">
+                <div class="invalid-feedback" id="mobile-feedback">Mobile number must be 10 digits long and start with 6, 7, 8, or 9.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign Up</button>
+            <div class="server-error-message" id="server-error-message"></div>
+        </form>
+        <a href="login.html" class="login-link">Already have an account? Login</a>
+    </div>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            let form = this;
+
+            // Get input elements and feedback divs
+            const usernameInput = document.getElementById('username');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+            const mobileInput = document.getElementById('mobile');
+
+            const usernameFeedback = document.getElementById('username-feedback');
+            const emailFeedback = document.getElementById('email-feedback');
+            const passwordFeedback = document.getElementById('password-feedback');
+            const mobileFeedback = document.getElementById('mobile-feedback');
+            const serverErrorMessage = document.getElementById('server-error-message');
+
+            // Reset previous validation states
+            usernameInput.classList.remove('is-invalid');
+            emailInput.classList.remove('is-invalid');
+            passwordInput.classList.remove('is-invalid');
+            mobileInput.classList.remove('is-invalid');
+            serverErrorMessage.style.display = 'none'; // Hide server error message initially
+
+            let isValid = true;
+
+            // --- Custom Validations (beyond simple `required` and `minlength`) ---
+
+            // Username validation: minimum 3 characters (already in HTML, but reinforcing)
+            if (usernameInput.value.trim().length < 3) {
+                usernameInput.classList.add('is-invalid');
+                usernameFeedback.textContent = 'Username must be at least 3 characters long.';
+                isValid = false;
+            } else {
+                usernameInput.classList.remove('is-invalid');
+            }
+
+            // Email validation: Basic pattern check (already in HTML, but reinforcing)
+            // Note: HTML5 pattern for email is good for basic checks, but server-side validation is crucial.
+            const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i; // Added 'i' for case-insensitivity
+            if (!emailPattern.test(emailInput.value.trim())) {
+                emailInput.classList.add('is-invalid');
+                emailFeedback.textContent = 'Please enter a valid email address (e.g., example@domain.com).';
+                isValid = false;
+            } else {
+                emailInput.classList.remove('is-invalid');
+            }
+
+            // Password validation: Minimum 8 characters, at least one uppercase, one lowercase, one number, one special character
+            const passwordValue = passwordInput.value.trim();
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+            if (!passwordRegex.test(passwordValue)) {
+                passwordInput.classList.add('is-invalid');
+                passwordFeedback.textContent = 'Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character.';
+                isValid = false;
+            } else {
+                passwordInput.classList.remove('is-invalid');
+            }
+
+            // Mobile number validation: exactly 10 digits, starts with 6-9 (already in HTML, but reinforcing)
+            const mobilePattern = /^[6-9]\d{9}$/;
+            if (!mobilePattern.test(mobileInput.value.trim())) {
+                mobileInput.classList.add('is-invalid');
+                mobileFeedback.textContent = 'Mobile number must be 10 digits long and start with 6, 7, 8, or 9.';
+                isValid = false;
+            } else {
+                mobileInput.classList.remove('is-invalid');
+            }
+
+            // If all client-side validations pass, attempt submission
+            if (isValid) {
+                let username = usernameInput.value.trim();
+                let email = emailInput.value.trim();
+                let password = passwordValue; // Use the trimmed password
+                let mobile = mobileInput.value.trim();
+
+                fetch('https://mini-e-commerce-xrfg.onrender.com/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: username, email: email, password: password, mobile: mobile })
+                })
+                    .then(response => {
+                        // Check for specific status codes or error messages from the backend
+                        if (response.status === 409) { // Conflict, e.g., username/email already exists
+                            return response.json().then(data => {
+                                throw new Error(data.message || 'Username or email already exists.');
+                            });
+                        }
+                        if (!response.ok) { // Other HTTP errors
+                            return response.json().then(data => {
+                                throw new Error(data.message || `Server error: ${response.status}`);
+                            });
+                        }
+                        return response.json(); // Process successful response
+                    })
+                    .then(data => {
+                        // Assuming a successful signup always returns some data or a success message
+                        alert("Registration is successfully done!");
+                        // Redirect after a short delay
+                        setTimeout(() => {
+                            window.location.href = 'login.html';
+                        }, 1000);
+                    })
+                    .catch(error => {
+                        console.error('Signup error:', error);
+                        // Display error message to the user
+                        serverErrorMessage.textContent = error.message || 'An unexpected error occurred. Please try again.';
+                        serverErrorMessage.style.display = 'block';
+                        // Optionally, add is-invalid to specific fields if the error suggests it
+                        if (error.message.includes('Username')) {
+                            usernameInput.classList.add('is-invalid');
+                            usernameFeedback.textContent = error.message;
+                        }
+                        if (error.message.includes('email')) {
+                            emailInput.classList.add('is-invalid');
+                            emailFeedback.textContent = error.message;
+                        }
+                    });
+
+            } else {
+                // If client-side validation fails, apply Bootstrap's 'was-validated' class
+                form.classList.add('was-validated');
+            }
+        });
+    </script>
+</body>
+
+</html>

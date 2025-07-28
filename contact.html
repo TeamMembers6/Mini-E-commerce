@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - E-commerce Website</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+  <style>
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: var(--light-grey);
+      /* Overall page background */
+    }
+
+    /* Content wrapper background */
+    main {
+      flex-grow: 1;
+      /* Allows the main content to take up available space */
+      background-color: var(--soft-green-bg);
+      /* Background for main content */
+      padding: 40px 20px;
+      /* Added padding to main content */
+    }
+
+    .contact-section {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px var(--shadow-light);
+      text-align: center;
+      animation: fadeInUp 0.8s ease-out;
+      /* Added animation */
+    }
+
+    .contact-section h1 {
+      color: var(--primary-dark-blue);
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .contact-section p {
+      color: var(--medium-grey);
+      margin-bottom: 30px;
+      font-size: 1.1rem;
+    }
+
+    .contact-section form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .contact-section label {
+      font-weight: 600;
+      color: var(--primary-dark-blue);
+    }
+
+    .contact-section input[type="text"],
+    .contact-section input[type="email"],
+    .contact-section textarea {
+      padding: 12px 15px;
+      border: 1px solid var(--medium-grey);
+      border-radius: 8px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .contact-section input[type="text"]:focus,
+    .contact-section input[type="email"]:focus,
+    .contact-section textarea:focus {
+      outline: none;
+      border-color: var(--accent-blue);
+      box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    }
+
+    .contact-section textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .contact-section button {
+      background-color: var(--secondary-green);
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+      align-self: center;
+      /* Center the button */
+      width: fit-content;
+    }
+
+    .contact-section button:hover {
+      background-color: #16a085;
+      /* Darker green on hover */
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px var(--shadow-light);
+    }
+
+    /* Keyframe Animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+ 
+  </style>
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="logo">
+      <i class="fa-solid fa-shop"></i>
+      <h2>MyStore</h2>
+    </div>
+    <div class="menu">
+      <i class="fa-solid fa-bars" onclick="menuShow()"></i>
+    </div>
+    <div class="links nav">
+
+      <ul>
+        <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+        <li><a href="#" id="product-link"><i class="fas fa-box-open"></i> Products</a></li>
+        <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart Items</a></li>
+        <li><a href='about.html'><i class="fas fa-info-circle"></i> About</a></li>
+
+        <li><a href='contact.html' style="color: #3498db;"><i class="fas fa-envelope"></i> Contact</a></li>
+      </ul>
+
+    </div>
+  </div>
+
+  <main>
+    <section class="contact-section">
+      <h1>Contact Us</h1>
+      <p>Have a question or need assistance? Get in touch with us!</p>
+
+      <form action="mailto:yeswantthalluru@gmail.com" method="post" enctype="text/plain">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </section>
+
+
+  </main>
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section about">
+        <h3>About MyStore</h3>
+        <p>Your one-stop shop for the latest and greatest products. We strive for quality and customer satisfaction.</p>
+      </div>
+      <div class="footer-section links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="#" id="footer-product-link">Products</a></li>
+          <li><a href="cart.html">Cart</a></li>
+
+          <li><a href="contact.html">Contact Us</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-section contact">
+        <h3>Contact Us</h3>
+        <p><i class="fas fa-map-marker-alt"></i> 123 E-commerce St, Online City, World</p>
+        <p><i class="fas fa-phone"></i> +123 456 7890</p>
+        <p><i class="fas fa-envelope"></i> info@mystore.com</p>
+      </div>
+      <div class="footer-section social">
+        <h3>Follow Us</h3>
+        <div class="social-icons">
+                    <a href="https://github.com/TeamMembers6" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/yaswanth-thalluru/" target="_blank" aria-label="LinkedIn"><i
+                            class="fab fa-linkedin-in"></i></a>
+                    <a href="https://mobile.x.com/imYashBhai" target="_blank" aria-label="X (formerly Twitter)"><i
+                            class="fab fa-x-twitter"></i></a>
+                    <a href="mailto:yeswantthalluru@gmail.com" target="_blank" aria-label="E-Mail"><i
+                            class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 MyStore. All rights reserved.
+    </div>
+  </footer>
+ <script>
+    // Function to toggle the mobile menu visibility
+    function menuShow() {
+        let popup = document.querySelector('.links');
+        popup.classList.toggle('sidenav');
+    }
+
+    // --- Form Validation Script and Email Sending Logic ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // Generate random product id between 1 and 20 for dynamic links
+        let randomProductId = Math.floor(Math.random() * 20) + 1;
+
+        // Dynamically update the "Products" link in the header
+        document.getElementById("product-link").href = `product.html?id=${randomProductId}`;
+        // Dynamically update the "Products" link in the footer
+        document.getElementById("footer-product-link").href = `product.html?id=${randomProductId}`;
+
+        const form = document.getElementById('contactForm');
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const messageInput = document.getElementById('message');
+
+        // Get the error message elements (assuming you have these HTML elements with these IDs)
+        const nameError = document.getElementById('nameError');
+        const emailError = document.getElementById('emailError');
+        const messageError = document.getElementById('messageError');
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission (including mailto)
+
+            let isValid = true;
+
+            // Clear previous error messages and styles
+            resetErrors();
+
+            // Validate Name
+            if (nameInput.value.trim() === '') {
+                displayError(nameInput, nameError, 'Name is required.');
+                isValid = false;
+            }
+
+            // Validate Email
+            if (emailInput.value.trim() === '') {
+                displayError(emailInput, emailError, 'Email is required.');
+                isValid = false;
+            } else if (!isValidEmail(emailInput.value.trim())) {
+                displayError(emailInput, emailError, 'Please enter a valid email address.');
+                isValid = false;
+            }
+
+            // Validate Message
+            if (messageInput.value.trim() === '') {
+                displayError(messageInput, messageError, 'Message is required.');
+                isValid = false;
+            } else if (messageInput.value.trim().length < 10) {
+                displayError(messageInput, messageError, 'Message must be at least 10 characters long.');
+                isValid = false;
+            }
+
+           // If all validations pass, proceed with the mailto action
+            if (isValid) {
+                // Encode the form data for the mailto link
+                const name = encodeURIComponent(nameInput.value.trim());
+                const email = encodeURIComponent(emailInput.value.trim());
+                const message = encodeURIComponent(messageInput.value.trim());
+
+                // Define the subject and body of the email
+                const subject = encodeURIComponent('Contact Form Inquiry from MyStore');
+                const body = encodeURIComponent(`Name: ${nameInput.value.trim()}\nEmail: ${emailInput.value.trim()}\n\nMessage:\n${messageInput.value.trim()}`);
+
+                // Trigger the mailto link to open the user's email client
+                // This must be directly initiated by the user gesture for security
+                window.location.href = `mailto:yeswantthalluru@gmail.com?subject=${subject}&body=${body}`;
+
+                // Optional: Provide feedback to the user AFTER the mailto is launched
+                // You might consider a small, non-blocking message on the page itself
+                // or a different type of UI feedback, if necessary.
+                // console.log('Email client launched. Form reset.'); // For debugging
+
+                // Clear the form fields after successful validation and mailto trigger
+                form.reset();
+            }
+          });
+
+        // Helper function to display an error message and apply error styling
+        function displayError(inputElement, errorElement, message) {
+            // Add 'form-group' class to the parent div if it's not already there (for styling)
+            // This assumes the input/textarea is wrapped in a div with class 'form-group'
+            let parentFormGroup = inputElement.closest('.form-group');
+            if (parentFormGroup) {
+                parentFormGroup.classList.add('error');
+            }
+            errorElement.textContent = message;
+        }
+
+        // Helper function to reset all error states (remove error messages and styling)
+        function resetErrors() {
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error'); // Remove error border
+            });
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.textContent = ''; // Clear error text
+            });
+        }
+
+        // Basic email format validation using a regular expression
+        function isValidEmail(email) {
+            // This regex checks for a basic email pattern: something@something.domain
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+    });
+</script>
+</body>
+
+</html>

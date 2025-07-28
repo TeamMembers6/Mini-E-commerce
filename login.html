@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+   
+    <style>
+        /* style.css */
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Changed height to min-height for better responsiveness */
+            background: linear-gradient(135deg, #1e2f32, #4c8b9a);
+            /* Gradient background */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            /* Modern font */
+            margin: 0;
+            overflow: hidden;
+            /* Hide overflow for background animations */
+            position: relative;
+        }
+
+        /* Background animation */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="%23ffffff" fill-opacity="0.1"/></svg>') repeat;
+            background-size: 50px 50px;
+            animation: backgroundMove 60s linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes backgroundMove {
+            from {
+                background-position: 0 0;
+            }
+
+            to {
+                background-position: 1000px 1000px;
+            }
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            /* Slightly transparent white background */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            /* Deeper shadow */
+            transform: translateY(0);
+            transition: transform 0.5s ease-out, box-shadow 0.5s ease-out;
+            position: relative;
+            z-index: 1;
+            /* Ensure container is above background animation */
+            overflow: hidden;
+            width: 380px;
+            /* Slightly wider for better spacing */
+            max-width: 90%;
+            /* Responsive width */
+            text-align: center;
+        }
+
+        .login-container:hover {
+            transform: translateY(-5px);
+            /* Slight lift on hover */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: inherit;
+            filter: blur(20px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+
+        .login-container h2 {
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 2.2em;
+            /* Larger heading */
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-container .form-control {
+            margin-bottom: 20px;
+            /* Increased margin */
+            border-radius: 8px;
+            /* More rounded inputs */
+            padding: 12px 15px;
+            border: 1px solid #ced4da;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .login-container .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+            /* Bootstrap's focus shadow */
+        }
+
+        .login-container .form-label {
+            text-align: left;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .login-container .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            background-color: #007bff;
+            border-color: #007bff;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+
+        .login-container .btn:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+            transform: translateY(-2px);
+            /* Slight lift on button hover */
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        .signup-link {
+            display: block;
+            text-align: center;
+            margin-top: 25px;
+            /* Increased margin */
+            font-size: 0.95em;
+            color: #007bff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .signup-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        .invalid-feedback {
+            font-size: 0.85em;
+            margin-top: 5px;
+        }
+
+        .invalid-credentials {
+            color: #dc3545;
+            /* Red for error messages */
+            text-align: center;
+            margin-top: 15px;
+            font-weight: 600;
+            font-size: 0.9em;
+            display: none;
+            /* Controlled by JavaScript */
+            animation: shake 0.5s;
+            /* Shake animation for error */
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-5px);
+            }
+
+            40% {
+                transform: translateX(5px);
+            }
+
+            60% {
+                transform: translateX(-5px);
+            }
+
+            80% {
+                transform: translateX(5px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Optional: Add a subtle glow on form elements when invalid */
+        .form-control.is-invalid {
+            box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="login-form" novalidate>
+            <div class="mb-3">
+                <label for="username" class="form-label">User Name :</label>
+                <input type="text" class="form-control" id="username" required>
+                <div class="invalid-feedback" id="username-feedback">Enter a valid username.</div>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password :</label>
+                <input type="password" class="form-control" id="password" required>
+                <div class="invalid-feedback" id="password-feedback">Enter a valid password.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <div class="invalid-credentials">Enter valid username and password.</div>
+        </form>
+        <a href="signup.html" class="signup-link">Don't have an account? Sign up</a>
+    </div>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent default form submission
+            event.stopPropagation(); // Stop event propagation
+
+            let form = this;
+
+            // Reset previous validation states
+            document.getElementById('username').classList.remove('is-invalid');
+            document.getElementById('password').classList.remove('is-invalid');
+            document.querySelector('.invalid-credentials').style.display = 'none';
+
+            let usernameInput = document.getElementById('username');
+            let passwordInput = document.getElementById('password');
+            let usernameFeedback = document.getElementById('username-feedback');
+            let passwordFeedback = document.getElementById('password-feedback');
+
+            let isValid = true;
+
+            // Username validation
+            if (usernameInput.value.trim() === '') {
+                usernameInput.classList.add('is-invalid');
+                usernameFeedback.textContent = 'Username is required.';
+                isValid = false;
+            } else if (usernameInput.value.trim().length < 3) {
+                usernameInput.classList.add('is-invalid');
+                usernameFeedback.textContent = 'Username must be at least 3 characters long.';
+                isValid = false;
+            } else {
+                usernameInput.classList.remove('is-invalid');
+            }
+
+
+            // Password validation
+            if (passwordInput.value.trim() === '') {
+                passwordInput.classList.add('is-invalid');
+                passwordFeedback.textContent = 'Password is required.';
+                isValid = false;
+            } else if (passwordInput.value.trim().length < 6) {
+                passwordInput.classList.add('is-invalid');
+                passwordFeedback.textContent = 'Password must be at least 6 characters long.';
+                isValid = false;
+            } else {
+                passwordInput.classList.remove('is-invalid');
+            }
+
+
+            if (isValid) {
+                let username = usernameInput.value.trim();
+                let password = passwordInput.value.trim();
+
+                fetch('https://mini-e-commerce-xrfg.onrender.com/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: username, password: password })
+                })
+                    .then((res) => {
+                        if (!res.ok) { // Check if HTTP response is OK (status in the range 200-299)
+                            return res.json().then(err => { throw err; }); // Parse error message and throw
+                        }
+                        return res.json();
+                    })
+                    .then((data) => {
+                        if (data.token) { // If login is successful, token will be present
+                            // Store the JWT token in localStorage
+                            localStorage.setItem('auth', data.token);
+
+                            localStorage.setItem('isLoggedIn', true);
+
+                            // Redirect to appropriate page
+                            if (localStorage.getItem('buyProductId')) {
+                                window.location.href = 'buy.html';
+                            } else {
+                                window.location.href = 'index.html';
+                            }
+                        } else {
+                            // This block might be reached if the API returns 200 OK but with a "success: false" or similar structure
+                            document.querySelector('.invalid-credentials').style.display = 'block';
+                            usernameInput.classList.add('is-invalid');
+                            passwordInput.classList.add('is-invalid');
+                            usernameFeedback.textContent = 'Invalid username or password.';
+                            passwordFeedback.textContent = 'Invalid username or password.';
+                        }
+                    })
+                    .catch((error) => {
+                        console.error('Login error:', error);
+                        // Display server-side error message if available, otherwise a generic one
+                        const errorMessage = error.message || 'An unexpected error occurred. Please try again.';
+                        document.querySelector('.invalid-credentials').textContent = errorMessage;
+                        document.querySelector('.invalid-credentials').style.display = 'block';
+                        usernameInput.classList.add('is-invalid');
+                        passwordInput.classList.add('is-invalid');
+                        usernameFeedback.textContent = errorMessage; // Update feedback directly
+                        passwordFeedback.textContent = errorMessage; // Update feedback directly
+                    });
+            } else {
+                // If front-end validation fails, add 'was-validated' class to show Bootstrap feedback
+                form.classList.add('was-validated');
+            }
+        });
+    </script>
+</body>
+
+</html>
